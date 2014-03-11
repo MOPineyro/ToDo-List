@@ -1,15 +1,30 @@
+## To Do:
+# Fix date property
+# Set sort by date and name
+# Give users the option to edit a task's description
+# Add input interface
+
+
+
 class Task
   def initialize(description)
     @description = description
-    @priorty = 0
+    @priority = 0
   end
 
   def description
     @description
   end
 
-  def due_date(date)
-    @date
+  def set_due_date(month,day,year)
+    @month = month
+    @day = day
+    @year = year
+    @due_date = Date.new(@year,@month,@day)
+  end
+
+  def get_due_date
+    @due_date
   end
 
   def set_priority(priority)
@@ -60,6 +75,17 @@ class List
 
   def tasks
     @tasks
+  end
+
+  def task_sort(type)
+    if type == "priority"
+      sorted_list = @tasks.sort_by { |task| task.get_priority }.reverse
+    elsif type == "date"
+      sorted_list = @tasks.sort_by { |task| task.get_due_date }.reverse
+    elsif type == "name"
+      sorted_list = @tasks.sort_by { |task| task.description }.reverse
+    end
+    sorted_list
   end
 
 end
